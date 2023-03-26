@@ -1,0 +1,19 @@
+version: '3'
+services:
+  echo:
+    image: solsson/http-echo
+    deploy:
+      replicas: 1
+  haproxy:
+    image: haproxy:bullseye
+    dns:
+      - 127.0.0.11:53
+    depends_on:
+     - echo
+    volumes:
+      - ./haproxy.cfg/:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+     - '80:80'
+     - '1937:1936'
+
+
